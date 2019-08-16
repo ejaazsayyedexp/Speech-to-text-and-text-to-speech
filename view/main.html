@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Speech to text</title>
+    <style type="text/css">
+        body{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        #res{
+            height:200px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px 0 #bbb;
+            margin-bottom: 30px;
+            font-size: 14px;
+            line-height: 25px;
+        }
+        #start{
+            font-size: 20px;
+            position: absolute;
+            top:240px;
+            left:40%;
+        }
+        #stop{
+            font-size: 20px;
+            position:absolute;
+            top:240px;
+            left:60%;
+        }
+        #clear{
+            font-size: 20px;
+            position:absolute;
+            top:240px;
+            left:50%;    
+        }
+    </style>
+</head>
+<body>
+    <h2 align="center">Speech to Text</h2>
+    <div id="res"></div>
+    <button id="start" onclick="startConverting()">Start here</button>
+    <button id="clear" onclick="clearOut()">Clear here</button>
+    <button id="stop" onclick="stopConverting()">Stop here.</button>
+    <script type="text/javascript">
+        var r = document.getElementById('res');
+        var speechRecognizer = new webkitSpeechRecognition();
+        function startConverting(){
+            if('webkitSpeechRecognition' in window){
+            speechRecognizer.continuous = true;
+            speechRecognizer.interimResults = true;
+            speechRecognizer.lang='en-IN';
+            speechRecognizer.start();
+
+            var finalTranscripts = '';
+            speechRecognizer.onresult = function(event){
+                var interimTranscripts = '';
+                for(var i =event.resultIndex;i<event.results.length;i++){
+                    var transcript = event.results[i][0].transcript;
+                    transcript.replace("\n","<br/>");
+                    if(event.results[i].isFinal) {
+                        finalTranscripts+=transcript;
+                    }else{
+                        interimTranscripts+=transcript;
+                    }
+                }
+                r.innerHTML = finalTranscripts+"<span style='color:#999'>"+interimTranscripts+'</span>';
+            };
+            speechRecognizer.onerror = function(event){
+
+            };
+        }
+        else{
+            r.innerHTML="Not supported"
+        }
+        }
+        function stopConverting(){
+            speechRecognizer.stop();
+        }
+        function clearOut(){
+            r.innerHTML='';
+        }
+    </script>
+</body>
+</html>
