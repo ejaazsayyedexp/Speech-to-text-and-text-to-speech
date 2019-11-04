@@ -15,6 +15,6 @@ app.get('/stt',(req,res)=>{
 })
 
 
-app.listen(9000,()=>{
+app.listen(process.env.PORT  || 9000,()=>{
     console.log("Server started at 9000");
 });

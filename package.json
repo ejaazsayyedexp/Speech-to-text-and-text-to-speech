@@ -4,13 +4,20 @@
   "description": "Nothing",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start":"node index.js"
   },
-  "author": "Ejaaz",
-  "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "path": "^0.12.7"
-  }
+  },
+  "engines":{
+    "node":"10.16.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ejaazsayyedexp/Speech-to-text-and-text-to-speech"
+  },
+  "author": "Ejaaz",
+  "license": "ISC"
 }
